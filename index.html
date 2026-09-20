@@ -59,7 +59,6 @@
         radial-gradient(900px 500px at 50% 110%, rgba(236,72,153,0.10), transparent 55%),
         linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
     }
-    /* Кастомный скроллбар */
     ::-webkit-scrollbar { width: 10px; height: 10px; }
     ::-webkit-scrollbar-track { background: transparent; }
     ::-webkit-scrollbar-thumb {
@@ -70,21 +69,13 @@
     }
     ::-webkit-scrollbar-thumb:hover { background: #6366f1; background-clip: padding-box; }
 
-    /* Стеклянная карточка */
     .glass {
       background: rgba(255, 255, 255, 0.72);
       backdrop-filter: blur(14px) saturate(140%);
       -webkit-backdrop-filter: blur(14px) saturate(140%);
       border: 1px solid rgba(255, 255, 255, 0.6);
     }
-    .glass-dark {
-      background: rgba(15, 23, 42, 0.55);
-      backdrop-filter: blur(14px) saturate(140%);
-      -webkit-backdrop-filter: blur(14px) saturate(140%);
-      border: 1px solid rgba(255, 255, 255, 0.08);
-    }
 
-    /* Красивая карточка пословицы */
     .proverb-card {
       position: relative;
       transition: transform .45s cubic-bezier(0.22, 1, 0.36, 1),
@@ -111,7 +102,6 @@
     }
     .proverb-card:hover::before { opacity: 1; }
 
-    /* Анимированное подчёркивание у цифры */
     .digit-underline {
       position: relative;
       display: inline-block;
@@ -129,10 +119,8 @@
     }
     .digit-underline.active::after { transform: scaleX(1); }
 
-    /* Плавное появление сетки */
     #results > * { animation: fadeUp .5s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-    /* Кнопки-цифры */
     .digit-btn {
       transition: transform .25s ease, background-color .3s ease, color .3s ease, box-shadow .3s ease;
     }
@@ -144,7 +132,6 @@
       box-shadow: 0 10px 20px -8px rgba(99,102,241,0.7);
     }
 
-    /* Фильтр-чипы */
     .filter-chip {
       transition: all .3s cubic-bezier(0.22, 1, 0.36, 1);
     }
@@ -154,7 +141,6 @@
       box-shadow: 0 10px 20px -10px rgba(15,23,42,0.6);
     }
 
-    /* Skeleton */
     .skeleton {
       background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 37%, #e2e8f0 63%);
       background-size: 400% 100%;
@@ -162,7 +148,6 @@
       border-radius: 12px;
     }
 
-    /* Плавный переход содержимого */
     .fade-swap { animation: fadeIn .35s ease-out both; }
   </style>
 </head>
@@ -241,9 +226,7 @@
       <!-- Быстрые цифры -->
       <div class="mt-5">
         <p class="text-xs font-semibold uppercase tracking-wider text-slate-500 mb-2.5">Быстрый выбор</p>
-        <div id="digitButtons" class="flex flex-wrap gap-2">
-          <!-- Генерируется JS -->
-        </div>
+        <div id="digitButtons" class="flex flex-wrap gap-2"></div>
       </div>
 
       <!-- Фильтр по языку -->
@@ -282,7 +265,6 @@
     <div id="skeleton" class="hidden grid gap-5 md:grid-cols-2 lg:grid-cols-2"></div>
     <div id="results" class="grid gap-5 md:grid-cols-2 lg:grid-cols-2"></div>
 
-    <!-- Empty -->
     <div id="emptyState" class="hidden text-center py-24 animate-fadeIn">
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white shadow-lg shadow-slate-200 mb-5">
         <span class="text-4xl">🔍</span>
@@ -291,7 +273,6 @@
       <p class="text-slate-500">Введите цифру от 1 до 9 в поисковике выше.</p>
     </div>
 
-    <!-- No results after filter -->
     <div id="filterEmptyState" class="hidden text-center py-24 animate-fadeIn">
       <div class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-white shadow-lg shadow-slate-200 mb-5">
         <span class="text-4xl">🎭</span>
@@ -300,7 +281,6 @@
       <p class="text-slate-500">Попробуйте выбрать «Все языки» или другую цифру.</p>
     </div>
 
-    <!-- Welcome -->
     <div id="welcomeState" class="text-center py-24 animate-fadeIn">
       <div class="inline-flex items-center justify-center w-24 h-24 rounded-3xl bg-white shadow-xl shadow-indigo-100 mb-6 animate-floaty">
         <span class="text-5xl">📖</span>
@@ -313,7 +293,6 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer class="relative z-10 border-t border-slate-200/70 py-8 mt-8">
     <p class="text-center text-sm text-slate-500">
       Comparative Paremiology · Symbolism of Numbers in English & Belarusian Proverbs
@@ -321,27 +300,22 @@
   </footer>
 
   <script>
-    // ===== ДАННЫЕ =====
+    // ===== ДАННЫЕ (с правками) =====
     const proverbsData = {
       1: [
         { lang: "EN", text: "All for one and one for all", note: "Ideal of collective solidarity while acknowledging the individual as the basic social unit." },
         { lang: "EN", text: "Look after number one", note: "Pragmatic dimension of British cultural values regarding self-preservation." },
         { lang: "EN", text: "A bird in the hand is worth two in the bush", note: "Values certainty and immediate possession over potential future gain." },
         { lang: "EN", text: "One apple a day keeps the doctor away", note: "Associates one with sufficiency and consistent action." },
-        { lang: "EN", text: "One man's meat is another man's poison", note: "Acknowledges variability of human experience and preference." },
         { lang: "EN", text: "One swallow does not make a summer", note: "Insufficiency of a single piece of evidence to establish a general conclusion." },
-        { lang: "EN", text: "One is enough", note: "Suggests a single unit can be adequate for certain purposes." },
         { lang: "BE", text: "Адна хата і тая без дзвярэй", note: "One hut and that without doors — expresses insufficiency and inadequacy." },
-        { lang: "BE", text: "Адно зрэнятка пуд прыносіць", note: "One grain brings a pood — values small but meaningful contributions." },
+        { lang: "BE", text: "Адно зярнятка пуд прыносіць", note: "One grain brings a pood — values small but meaningful contributions." },
         { lang: "BE", text: "Адна капейка і тая рабром", note: "One kopeck and that on edge — expresses extreme scarcity." },
-        { lang: "BE", text: "Аднаму льецца, а другому нават і не капае", note: "To one it pours, to another it does not even drip — inequity of fate." },
-        { lang: "BE", text: "Адзін чорт маляваў", note: "One devil painted it — describes something bizarre or inexplicable." },
         { lang: "BE", text: "Адзін за ўсіх і ўсе за аднаго", note: "One for all and all for one — collective solidarity." },
         { lang: "BE", text: "Адзін у полі не воін", note: "One man in the field is not a warrior — insufficiency of individual effort." },
         { lang: "BE", text: "Адна галава добра, а дзве лепш", note: "One head is good, two are better — baseline for collective intelligence." },
-        { lang: "BE", text: "Адно вока бачыць далёка, а два – яшчэ далей", note: "One eye sees far, two — even farther — superiority of combined perception." },
-        { lang: "BE", text: "Сем разоў адмерай, адзін раз адрэж", note: "Measure seven times, cut once — contrast between seven and one." },
-        { lang: "BE", text: "Аднаму сем гадоў не шкода", note: "One person, seven years, not a loss — productivity and efficiency." }
+        { lang: "BE", text: "Адно вока бачыць далёка, а два — яшчэ далей", note: "One eye sees far, two — even farther — superiority of combined perception." },
+        { lang: "BE", text: "Сем разоў адмерай, адзін раз адрэж", note: "Measure seven times, cut once — contrast between seven and one." }
       ],
       2: [
         { lang: "EN", text: "It takes two to tango", note: "Encodes the principle of mutual responsibility in conflict or collaboration." },
@@ -352,107 +326,78 @@
         { lang: "EN", text: "Every stick has two ends", note: "Suggests situations have multiple perspectives or outcomes." },
         { lang: "EN", text: "Two heads are better than one", note: "Asserts the superiority of collective wisdom over individual intellect." },
         { lang: "EN", text: "You cannot have your cake and eat it too", note: "Impossibility of maintaining mutually exclusive alternatives." },
-        { lang: "EN", text: "Two for luck", note: "Magpie rhyme association of two with good fortune." },
         { lang: "EN", text: "There are two sides to every question", note: "Acknowledges complexity of issues and legitimacy of multiple perspectives." },
         { lang: "EN", text: "Two of a trade never agree", note: "Competitors in the same field are unlikely to get along." },
         { lang: "EN", text: "Two's company, three is none", note: "Adding a third person eliminates the comfortable social dynamic." },
-        { lang: "BE", text: "Абое – рабое", note: "Two of a kind, the same." },
-        { lang: "BE", text: "Адно вока бачыць далёка, а два – яшчэ далей", note: "One eye sees far, two — even farther — superiority of combined perception." },
+        { lang: "BE", text: "Абое — рабое", note: "Both are mottled." },
+        { lang: "BE", text: "Адно вока бачыць далёка, а два — яшчэ далей", note: "One eye sees far, two — even farther — superiority of combined perception." },
         { lang: "BE", text: "Два зайцы гнаць", note: "To chase two hares — warns against divided attention." },
-        { lang: "BE", text: "За двума зайцамі пагонішся, нiводнага не зловіш", note: "If you chase two hares, you will catch neither." },
+        { lang: "BE", text: "За двума зайцамі пагонішся — ніводнага не зловіш", note: "If you chase two hares, you will catch neither." },
         { lang: "BE", text: "Дзве галавы на аднаго каня", note: "Two heads on one horse — describes inefficient collaboration." },
         { lang: "BE", text: "Адна птушка не зробіць вясны, дзве птушкі не зробяць лета", note: "One bird does not make spring, two birds do not make summer." },
-        { lang: "BE", text: "Адна галава добра, а дзве лепш", note: "One head is good, two are better — superiority of collective wisdom." },
-        { lang: "BE", text: "Дваццаць чатыры гадзіны мае суткі", note: "Twenty-four hours has a day — descriptive proverb about time measurement." }
+        { lang: "BE", text: "Адна галава добра, а дзве лепш", note: "One head is good, two are better — superiority of collective wisdom." }
       ],
       3: [
         { lang: "EN", text: "Three removals are as bad as a fire", note: "Warns excessive change produces disastrous consequences." },
         { lang: "EN", text: "Three women (and a goose) make a market", note: "Suggests a small group can constitute a significant social gathering." },
-        { lang: "EN", text: "Fish and guests stink after three days", note: "Establishes three as the acceptable limit for hospitality." },
         { lang: "EN", text: "The third time pays for all", note: "Suggests persistence to the third attempt will be rewarded." },
         { lang: "EN", text: "Three acres and a cow", note: "Historically represented the ideal landholding for an English citizen." },
-        { lang: "EN", text: "Three things are not to be trusted: a cow's horn, a dog's tooth, and a horse's hoof", note: "Uses three to establish a list of specific dangers." },
         { lang: "EN", text: "There are three degrees of comparison: good, better, best", note: "Uses three to describe a grammatical structure." },
         { lang: "EN", text: "Three for a wedding", note: "Magpie rhyme association of three with marriage." },
         { lang: "EN", text: "Three may keep a secret if two of them are dead", note: "Suggests secrets are difficult to maintain with multiple people." },
-        { lang: "EN", text: "Three is a crowd", note: "Variant of 'Two is company, but three is a crowd'." },
-        { lang: "BE", text: "Адна бяда не бяда, дзве бяды – поўбяды, калі трэцюю надыбаеш, вот тады бяду спазнаеш", note: "One trouble is not trouble, two troubles are half-trouble, if you encounter a third, then you truly know trouble." },
-        { lang: "BE", text: "Адзін сын — не сын, два сыны — паўсына, і толькі тры сыны — сын", note: "One son — not a son, two sons — half a son, and only three sons — a son." },
         { lang: "BE", text: "Хто тры разы арэ, той болей снапоў збярэ", note: "He who plows three times gathers more sheaves." },
-        { lang: "BE", text: "Прыехала баба з горада, прывезла навасцей з тры кораба", note: "The woman arrived from the city, bringing news in three carts." },
+        { lang: "BE", text: "Прыехала баба з горада, прывезла навін з тры кораба", note: "The woman arrived from the city, bringing news in three carts." },
         { lang: "BE", text: "Скупы тройчы плаціць", note: "A miser pays three times." },
-        { lang: "BE", text: "Трох не злічыць", note: "Three cannot be counted — 'very many' or 'countless'." },
         { lang: "BE", text: "Адным махам трох забіць", note: "To kill three with one blow — Belarusian equivalent of 'To kill two birds with one stone'." },
-        { lang: "BE", text: "Тры гады — тры зімы", note: "Three years — three winters — associates three with duration of time." },
-        { lang: "BE", text: "Тры дубы — лес", note: "Three oaks is a forest — a small number of significant objects can constitute a collective." },
-        { lang: "BE", text: "Не тры дні, а тры гады", note: "Not three days, but three years — emphasizes long duration through contrast." },
         { lang: "BE", text: "На тры вярсты не дагоніш", note: "You cannot catch up in three versts." },
-        { lang: "BE", text: "Тры пяты", note: "Three heels — expression of disapproval." },
-        { lang: "BE", text: "Тры бубны", note: "Three tambourines — expression meaning nonsense or foolishness." },
-        { lang: "BE", text: "Добры хлеб тры месяцы", note: "Good bread lasts three months." },
         { lang: "BE", text: "На тры вакны не наглядзіш", note: "You cannot watch three windows — difficulty of attending to multiple things simultaneously." }
       ],
       4: [
         { lang: "EN", text: "A horse stumbles that hath four legs", note: "Uses four to establish that even a creature with multiple points of support can fail." },
         { lang: "EN", text: "Four eyes see more than two", note: "Asserts the superiority of multiple perspectives over a single perspective." },
-        { lang: "EN", text: "Four for a birth", note: "Magpie rhyme associating four with the fundamental life event of birth." },
         { lang: "EN", text: "The four corners of the earth", note: "Uses four to denote the entirety of the world." },
         { lang: "EN", text: "Four will not do what one can do", note: "Suggests the quality of action is more important than the quantity of actors." },
-        { lang: "EN", text: "A four-square man", note: "Metaphor for honesty, reliability, and trustworthiness." },
         { lang: "EN", text: "To go on all fours", note: "Descriptive expression using four to denote four limbs." },
         { lang: "BE", text: "На ўсе чатыры бакі", note: "To all four sides — denotes the complete compass of directions, 'everywhere'." },
-        { lang: "BE", text: "Чатыры капылы", note: "Four legs — used in expression 'перакуліцца на чатыры капылы' — to survive a fall." },
+        { lang: "BE", text: "Чатыры капыты", note: "Four hooves — used in expression 'перакуліцца на чатыры капыты' — to survive a fall." },
         { lang: "BE", text: "За чатыры мора", note: "Beyond four seas — variant of 'за дзевяць земляў' denoting an extremely distant place." }
       ],
       5: [
         { lang: "EN", text: "He knows how many beans make five", note: "Indicates shrewdness, practical knowledge, and ability to manage affairs." },
-        { lang: "EN", text: "Five for silver", note: "Magpie rhyme associating five with precious metal." },
-        { lang: "EN", text: "There are five fingers on every hand", note: "Uses five to establish a fundamental fact about the human body." },
         { lang: "EN", text: "To give five", note: "Modern slang using five as a metonym for the hand." },
         { lang: "EN", text: "A five-legged dog", note: "Metaphor for something strange or unnatural." },
         { lang: "BE", text: "За пяць пальцаў не купіш", note: "You can't buy for five fingers — uses five to denote insufficiency for purchase." },
-        { lang: "BE", text: "Памёр багаты – па пяцёра з хаты, а памёр бедны худачок – толькі поп ды дзячок", note: "When a rich man died — five from each house attended; when a poor man died — only the priest and deacon." },
+        { lang: "BE", text: "Памёр багаты — па пяцёра з хаты, а памёр бедны худачок — толькі поп ды дзячок", note: "When a rich man died — five from each house attended; when a poor man died — only the priest and deacon." },
         { lang: "BE", text: "На пяць костак не разлічыш", note: "You can't count on five bones — impossibility of relying on something or someone." },
-        { lang: "BE", text: "Ад пяці коп пяцярых", note: "From five people, five different opinions." }
+        { lang: "BE", text: "Ад пяцярых пяць думак", note: "From five people, five different opinions." }
       ],
       6: [
         { lang: "EN", text: "Six of one and half a dozen of the other", note: "Indicates equivalence between two options." },
         { lang: "EN", text: "At sixes and sevens", note: "Denotes a state of confusion or disorder." },
         { lang: "EN", text: "Six for gold", note: "Magpie rhyme associating six with wealth and material value." },
         { lang: "EN", text: "Six feet under", note: "Expression meaning dead and buried." },
-        { lang: "EN", text: "Six and two threes", note: "Variant expressing equivalence." },
         { lang: "BE", text: "Дзе кухарак шэсць, там няма чаго есць", note: "Where there are six cooks, there is nothing to eat — paradox of excessive labor." },
-        { lang: "BE", text: "Шэсць разоў адмерай, адзін раз адрэж", note: "Measure six times, cut once — variant of the more common 'Measure seven times'." },
-        { lang: "BE", text: "На шэсць гадзін", note: "For six hours — indicates a significant period of time." },
         { lang: "BE", text: "Шэсць дзён працуй, а сёмы адпачывай", note: "Work six days, rest on the seventh — Belarusian equivalent of the Biblical commandment." }
       ],
       7: [
         { lang: "EN", text: "Keep a thing seven years and you will find a use for it", note: "Associates seven with patience and the long view." },
         { lang: "EN", text: "Seven for a secret never to be told", note: "Magpie rhyme associating seven with mystery and confidentiality." },
         { lang: "EN", text: "In the seventh heaven", note: "Denotes supreme happiness." },
-        { lang: "EN", text: "Seven days make a week", note: "Descriptive proverb using seven to establish the structure of time." },
         { lang: "EN", text: "The seventh son of a seventh son", note: "Associated with special powers and prophetic abilities in English folklore." },
-        { lang: "EN", text: "A stitch in time saves nine", note: "Uses the contrast between one and nine to express the principle of timely action." },
         { lang: "EN", text: "Seven years of plenty and seven years of famine", note: "From the Biblical story — represents cycles of abundance and scarcity." },
         { lang: "EN", text: "Seven is the lucky number", note: "General statement of belief." },
-        { lang: "EN", text: "To be at sixes and sevens", note: "Uses seven in conjunction with six to express disorder." },
         { lang: "EN", text: "Keep seven wise men, and you will get seven different answers", note: "Uses seven to express diversity of opinion among experts." },
-        { lang: "BE", text: "У сямi нянек дзiця без вока", note: "Among seven nannies a child is without an eye — excessive oversight leads to neglect." },
+        { lang: "BE", text: "У сямі нянек дзіця без вока", note: "Among seven nannies a child is without an eye — excessive oversight leads to neglect." },
         { lang: "BE", text: "На сем сукоў садзіцца", note: "To sit on seven branches — denotes someone who tries to do too many things at once." },
         { lang: "BE", text: "Сем разоў адмерай, адзін раз адрэж", note: "Measure seven times, cut once — one of the best-known Slavic proverbs." },
         { lang: "BE", text: "Сем гадоў працы", note: "Seven years of work — expresses a significant period of effort." },
-        { lang: "BE", text: "Сем дзён тыдня", note: "Seven days of the week — descriptive proverb about time structure." },
         { lang: "BE", text: "Сем разоў падумай, адзін раз скажы", note: "Think seven times, say once — careful preparation applied to speech." },
-        { lang: "BE", text: "Сем бед – адзін адказ", note: "Seven troubles is the same answer — multiple problems can be solved with a single solution." },
-        { lang: "BE", text: "Аднаму сем гадоў не шкода", note: "One person, seven years, not a loss — expresses that someone's time is not wasted." }
+        { lang: "BE", text: "Сем бед — адзін адказ", note: "Seven troubles — one answer — multiple problems can be solved with a single solution." }
       ],
       8: [
-        { lang: "EN", text: "Eight for a wish", note: "Magpie rhyme associating eight with the fulfillment of desire." },
         { lang: "EN", text: "Fall seven times, stand up eight", note: "Uses eight (one more than seven) to denote resilience and persistence." },
         { lang: "EN", text: "An eight-day clock", note: "Descriptive proverb about clocks running for eight days." },
-        { lang: "EN", text: "Eight is the number of the new beginning", note: "General statement of association." },
         { lang: "BE", text: "На восьмым небе", note: "On the eighth heaven — variant of 'На сёмым небе' denoting supreme happiness." },
-        { lang: "BE", text: "Восем разоў адмерай, адзін раз адрэж", note: "Measure eight times, cut once — variant suggesting extra caution." },
         { lang: "BE", text: "За восем вёрст", note: "Beyond eight versts — denotes a significant distance." }
       ],
       9: [
@@ -460,25 +405,17 @@
         { lang: "EN", text: "Nine for a kiss", note: "Magpie rhyme associating nine with affection and romantic love." },
         { lang: "EN", text: "Nine for hell", note: "Variant in some magpie rhyme versions reflecting the duality of nine." },
         { lang: "EN", text: "On cloud nine", note: "Denotes supreme happiness." },
-        { lang: "EN", text: "A stitch in time saves nine", note: "Uses nine to express the principle of timely action preventing larger problems." },
         { lang: "EN", text: "Nine times out of ten", note: "Common expression suggesting high probability." },
         { lang: "EN", text: "Possession is nine points of the law", note: "Suggests actual possession is the most important factor in legal disputes." },
         { lang: "EN", text: "A nine-day wonder", note: "Suggests something attracting attention for a short period then forgotten." },
         { lang: "EN", text: "The nine lives of a cat", note: "Variant of the more common 'A cat has nine lives'." },
         { lang: "BE", text: "За дзевяць земляў", note: "Beyond nine lands — denotes an extremely distant place." },
-        { lang: "BE", text: "У дзявятай вадзе", note: "In the ninth water — variant denoting something very far or distant." },
-        { lang: "BE", text: "Дзевяць разоў адмерай, адзін раз адрэж", note: "Measure nine times, cut once — variant suggesting extra caution." },
         { lang: "BE", text: "За дзевяць гадоў", note: "For nine years — denotes a significant period of time." }
       ]
     };
 
-    // ===== СОСТОЯНИЕ =====
-    const state = {
-      currentDigit: null,
-      currentLang: 'all',
-    };
+    const state = { currentDigit: null, currentLang: 'all' };
 
-    // ===== DOM =====
     const input = document.getElementById('searchInput');
     const results = document.getElementById('results');
     const skeleton = document.getElementById('skeleton');
@@ -492,7 +429,6 @@
     const digitButtonsContainer = document.getElementById('digitButtons');
     const filterChips = document.querySelectorAll('.filter-chip');
 
-    // ===== DIGIT BUTTONS =====
     for (let i = 1; i <= 9; i++) {
       const btn = document.createElement('button');
       btn.className = 'digit-btn w-11 h-11 rounded-xl bg-white border-2 border-slate-200 text-slate-700 font-bold shadow-sm hover:border-indigo-300 hover:text-indigo-700';
@@ -514,19 +450,15 @@
       });
     }
 
-    // ===== FILTER CHIPS =====
     filterChips.forEach(chip => {
       chip.addEventListener('click', () => {
         filterChips.forEach(c => c.classList.remove('active'));
         chip.classList.add('active');
         state.currentLang = chip.dataset.lang;
-        if (state.currentDigit !== null) {
-          renderResults(state.currentDigit, { animate: true });
-        }
+        if (state.currentDigit !== null) renderResults(state.currentDigit, { animate: true });
       });
     });
 
-    // ===== ПОИСК =====
     input.addEventListener('keydown', (e) => {
       if (e.key === 'Enter') searchNumber();
     });
@@ -534,10 +466,7 @@
     function searchNumber() {
       const val = input.value.trim();
       const num = parseInt(val, 10);
-      if (!val || isNaN(num) || num < 1 || num > 9) {
-        showEmpty();
-        return;
-      }
+      if (!val || isNaN(num) || num < 1 || num > 9) { showEmpty(); return; }
       state.currentDigit = num;
       updateDigitButtons();
       renderResults(num, { animate: true });
@@ -575,22 +504,17 @@
       emptyState.classList.add('fade-swap');
     }
 
-    // ===== РЕНДЕР =====
     function renderResults(num, { animate = false } = {}) {
       const all = proverbsData[num] || [];
-      const items = state.currentLang === 'all'
-        ? all
-        : all.filter(i => i.lang === state.currentLang);
+      const items = state.currentLang === 'all' ? all : all.filter(i => i.lang === state.currentLang);
 
-      // Скрываем состояния
       welcomeState.classList.add('hidden');
       emptyState.classList.add('hidden');
       filterEmptyState.classList.add('hidden');
 
-      // Инфо-блок
       resultInfo.classList.remove('hidden');
       resultInfo.classList.remove('fade-swap');
-      void resultInfo.offsetWidth; // перезапуск анимации
+      void resultInfo.offsetWidth;
       resultInfo.classList.add('fade-swap');
 
       digitBadge.textContent = num;
@@ -612,7 +536,6 @@
         return;
       }
 
-      // Skeleton на очень короткое время для плавности
       if (animate) {
         skeleton.innerHTML = Array.from({ length: Math.min(items.length, 4) }).map(() => `
           <div class="glass rounded-2xl p-5">
@@ -631,19 +554,14 @@
         results.innerHTML = items.map((item, idx) => cardHTML(item, idx)).join('');
       };
 
-      if (animate) {
-        setTimeout(renderNow, 220);
-      } else {
-        renderNow();
-      }
+      if (animate) setTimeout(renderNow, 220);
+      else renderNow();
     }
 
     function cardHTML(item, idx) {
       const isEN = item.lang === 'EN';
       const langLabel = isEN ? '🇬🇧 EN' : '🇧🇾 BE';
-      const accent = isEN
-        ? 'from-indigo-500 to-blue-500'
-        : 'from-emerald-500 to-teal-500';
+      const accent = isEN ? 'from-indigo-500 to-blue-500' : 'from-emerald-500 to-teal-500';
       const chipBg = isEN
         ? 'bg-indigo-50 text-indigo-700 border-indigo-100'
         : 'bg-emerald-50 text-emerald-700 border-emerald-100';
@@ -651,7 +569,6 @@
       return `
         <article class="proverb-card glass rounded-2xl p-5 md:p-6 shadow-md shadow-slate-200/60 overflow-hidden"
                  style="animation-delay: ${idx * 45}ms">
-          <!-- Верхняя цветная линия -->
           <span class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r ${accent}"></span>
 
           <div class="flex items-center justify-between gap-3 mb-3">
@@ -679,7 +596,6 @@
       `;
     }
 
-    // ===== INIT =====
     updateDigitButtons();
   </script>
 </body>
